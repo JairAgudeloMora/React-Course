@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class Input extends Component {
+    render(){
+        return (
+            <input
+                value = {this.props.value}
+                onChange = {this.props.onChange}
+            />
+        )
+    }
 }
 
-export default App;
+class App extends Component {
+    state = {
+        firstName: '',
+        lastName: '',
+     }
+    updateValues = (props, value) => {
+        console.log(`
+            Just here the props: ${props} \n 
+            with its arr destructuring: ${[props]} \n
+            and value: ${value}
+        `);
+
+        this.setState({ [props]: value })
+    }
+    render (){
+        return(
+            <p> 
+                Full name: {`${this.state.firstName} ${this.state.lastName}`}
+                <Input 
+                    value ={this.state.firstName}
+                    onChange = {e => this.updateValues('firstName', e.target.value )}
+                />
+                <Input 
+                    value ={this.state.lastName}
+                    onChange = {e => this.updateValues('lastName', e.target.value )} 
+                />
+            </p>
+        )
+    }
+}
+
+export default App
